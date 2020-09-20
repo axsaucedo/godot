@@ -3,10 +3,11 @@
 #ifndef SUMMATOR_H
 #define SUMMATOR_H
 
-#include <memory.h>
+#include <memory>
+
+#include "kompute/Kompute.hpp"
 
 #include "core/reference.h"
-#include "kompute/Kompute.hpp"
 
 class Summator : public Reference {
     GDCLASS(Summator, Reference);
@@ -22,10 +23,8 @@ protected:
     static void _bind_methods();
 
 private:
-    kp::Manager mManager;
-    std::weak_ptr<kp::Sequence> mSequence;
-    std::shared_ptr<kp::Tensor> mTensor;
-    int mCount;
+    std::shared_ptr<int> mCount;
+    kp::Manager mgr;
 };
 
 #endif // SUMMATOR_H

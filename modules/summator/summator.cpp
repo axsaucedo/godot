@@ -5,19 +5,16 @@
 #include "summator.h"
 
 Summator::Summator() {
-    this->mTensor = this->mManager.buildTensor({ 0.0 });
-    this->mSequence = this->mManager.getOrCreateManagedSequence("AdditionSeq");
 }
 
 void Summator::add(float value) {
-    this->mCount += value;
 }
 
 void Summator::reset() {
 }
 
 int Summator::get_total() const {
-    return this->mCount;
+    return *this->mCount.get();
 }
 
 void Summator::_bind_methods() {

@@ -1,112 +1,17 @@
-#Import('env')
-#
-#module_env = env.Clone()
-#module_env.Append(CXXFLAGS=['-std:c++11']) # Flags for C++ code only
-#
-## Don't inject godots deps in module_env library
-##module_env['LIBS'] = []
-#
-## Vulkan Kompute Dependencies
-#module_env.AppendUnique(CPPPATH = 'vulkan-kompute/single_include/')
-#module_env.AppendUnique(LIBPATH = 'vulkan-kompute/build/src/Debug/kompute.lib')
-#
-## Vulkan Dependencies
-#module_env.AppendUnique(CPPPATH = 'C:/VulkanSDK/1.2.141.2/Include')
-#module_env.AppendUnique(LIBPATH = 'C:/VulkanSDK/1.2.141.2/Lib/vulkan-1.lib')
-#
-#module_env.add_source_files(module_env.modules_sources, "*.cpp") #this will add all the cpp files
-#
-#shared_lib = module_env.SharedLibrary(target='#bin/calculator', source=module_env.modules_sources)
-#
-## ADding library to main godot
-#env.Append(LIBPATH = ['#bin'])
-#
-## SCons wants the name of the library with it custom suffixes
-## (e.g. ".x11.tools.64") but without the final ".so".
-#shared_lib_shim = shared_lib[0].name.rsplit('.', 1)[0]
-#env.Append(LIBS=[shared_lib_shim])
-#
-#
-#o
-#
-#
-#o
-#
-#o
-#
-## Position-independent code is required for a shared library.
-##module_env.Append(CCFLAGS=['-fPIC'])
-#
-## Don't inject Godot's dependencies into our shared library.
-#print([m if isinstance(m, str) else m[0].name for m in module_env["LIBS"]])
-#module_env['LIBS'] = []
-#module_env.Append(LIBPATH=['#core'])
-##module_env.Append(LIBPATH=['#drivers'])
-#module_env.Append(LIBPATH=['#editor'])
-##module_env.Append(LIBPATH=['#main'])
-#module_env.Append(LIBS=["core.windows.opt.tools.64"])
-#module_env.Append(LIBS=["libcore.windowst.tools.64.a"])
-##module_env.Append(LIBS=["drivers.windows.opt.tools.64"])
-#module_env.Append(LIBS=["editor.windows.opt.tools.64"])
-##module_env.Append(LIBS=["main.windows.opt.tools.64"])
-##
-##module_env.Append(LIBPATH=['#bin'])
-##module_env.Append(LIBS=["godot.windows.tools.64"])
-#
-## Define the shared library. By default, it would be built in the module's
-## folder, however it's better to output it into `bin` next to the
-## Godot binary.
-#env.Append(LIBPATH=['#bin'])
-#shared_lib = module_env.SharedLibrary(target='#bin/summator', source=sources)
-#
-##shared_lib_shim = shared_lib[0].name.rsplit('.', 1)[0]
-#shared_lib_shim = shared_lib[0].name.split('.',1)[0]
-#env.Append(LIBS=[shared_lib_shim])
-#env.Append(LIBPATH=['#bin'])
-#
-#print("SHARED LIBR#######################")
-#print("name: " + shared_lib[0].name)
-#print("Shared lib: " + shared_lib_shim)
-#
-#module_env['LINKFLAGS'] = [ flag for flag in module_env['LINKFLAGS'] if flag != '/ENTRY:mainCRTStartup' ]
-#
-#print(module_env['LINKFLAGS'])
-#print([m if isinstance(m, str) else m[0].name for m in module_env["LIBS"]])
-#
-#
-#
-#
-#
-#
-
-
-# SCsub
+import os
 
 Import('env')
 
-env = env.Clone()
+dir_path = os.getcwd()
 
+# Kompute & Vulkan header files
+env.Append(CPPPATH = ['include/'])
 
-# Vulkan Kompute Dependencies
-env.Append(CPPPATH = ['vulkan-kompute/single_include/'])
-
-# Vulkan Dependencies
-env.Append(CPPPATH = ['C:/VulkanSDK/1.2.141.2/Include/'])
-
-# Add source files
 env.add_source_files(env.modules_sources, "*.cpp")
 
-env.Append(LIBPATH = ['#bin'])
-# Vulkan Kompute Dependencies
-env.Append(LIBS = ['vulkan-1', "kompute"])
-
-print(env["LIBSUFFIX"])
-
-## Add source files
-#shared_lib = module_env.SharedLibrary(target='#bin/summator', source=["register_types.cpp", "summator.cpp"])
-#
-##shared_lib_shim = shared_lib[0].name.rsplit('.', 1)[0]
-#shared_lib_shim = shared_lib[0].name.split('.',1)[0]
-#env.Append(LIBS=[shared_lib_shim])
-#env.Append(LIBPATH=['#bin'])
+# Kompute & Vulkan libraries
+env.Append(LIBS=[
+        File(dir_path +'/lib/kompute.lib'),
+        File(dir_path +'/lib/vulkan-1.lib'),
+    ])
 
