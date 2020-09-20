@@ -7,10 +7,10 @@
 
 #include "kompute/Kompute.hpp"
 
-#include "core/reference.h"
+#include "scene/main/node.h"
 
-class Summator : public Reference {
-    GDCLASS(Summator, Reference);
+class Summator : public Node {
+    GDCLASS(Summator, Node);
 
 public:
     Summator();
@@ -27,7 +27,6 @@ private:
     std::weak_ptr<kp::Sequence> mSequence;
     std::shared_ptr<kp::Tensor> mPrimaryTensor;
     std::shared_ptr<kp::Tensor> mSecondaryTensor;
-    int mCount;
 };
 
 #endif // SUMMATOR_H
