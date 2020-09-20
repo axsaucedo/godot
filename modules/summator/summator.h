@@ -17,14 +17,17 @@ public:
 
     void add(float value);
     void reset();
-    int get_total() const;
+    float get_total() const;
 
 protected:
     static void _bind_methods();
 
 private:
-    std::shared_ptr<int> mCount;
-    kp::Manager mgr;
+    kp::Manager mManager;
+    std::weak_ptr<kp::Sequence> mSequence;
+    std::shared_ptr<kp::Tensor> mPrimaryTensor;
+    std::shared_ptr<kp::Tensor> mSecondaryTensor;
+    int mCount;
 };
 
 #endif // SUMMATOR_H
